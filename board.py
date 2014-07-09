@@ -19,19 +19,32 @@ def fetchData():
     if departures is not None:
         return departures
 
-    result = urlfetch.fetch('http://developer.mbta.com/lib/gtrtfs/Departures.csv')
+    headers = {}
+    etag = memcache.get('etag')
+    if etag:
+        headers['If-None-Match'] = etag
+
+    result = urlfetch.fetch(
+        url='http://developer.mbta.com/lib/gtrtfs/Departures.csv',
+        headers=headers)
     #result = urlfetch.fetch('http://localhost:8080/static/example.csv')
     if result.status_code == 200:
-        response = []
-        boardcsv = csv.DictReader(result.content.splitlines())
-        for row in boardcsv:
-            if row['Origin'] == 'North Station':
-                response.append(row)
+        memcache.set('etag', result.headers['etag'])
+        memcache.set('lastresult', result.content)
+        result = result.content
+    elif result.status_code == 304:
+        result = memcache.get('lastresult')
+    else:
+        return None
 
-        memcache.set('departures', response, time=10)
-        return response
+    response = []
+    boardcsv = csv.DictReader(result.splitlines())
+    for row in boardcsv:
+        if row['Origin'] == 'North Station':
+            response.append(row)
 
-    return None
+    memcache.set('departures', response, time=15)
+    return response
 
 class BoardHandler(webapp2.RequestHandler):
     def get(self):
