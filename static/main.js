@@ -26,7 +26,7 @@ function updateHeader() {
     var curdate = document.getElementById('curdate');
     if (curdate) {
         curdate.innerHTML = zeroPad(thetime.getFullYear(), 4) + "-"
-                          + zeroPad(thetime.getMonth(), 2) + "-"
+                          + zeroPad(thetime.getMonth()+1, 2) + "-"
                           + zeroPad(thetime.getDate(), 2);
     }
 
