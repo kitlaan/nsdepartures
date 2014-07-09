@@ -1,0 +1,76 @@
+@import url(http://fonts.googleapis.com/css?family=Share+Tech+Mono);
+/*@font-face {
+    font-family: 'Share Tech Mono';
+    src: url(ShareTechMono-Regular.ttf);
+}*/
+
+body {
+    font-family: 'Share Tech Mono';
+    text-transform: uppercase;
+    background: black;
+    color: yellow;
+}
+
+p {
+    text-align: center;
+    font-size: 120%;
+    margin-bottom: 0;
+}
+
+table {
+    width: 100%;
+}
+
+td#refreshtime {
+    color: orange;
+    text-align: right;
+}
+
+td#refreshtime span {
+    cursor: pointer;
+}
+
+td#curtime {
+    text-align: right;
+}
+
+table#tracks {
+    margin-top: 1em;
+}
+
+table#tracks tr:nth-child(even) {
+    background: #202020;
+}
+
+table#tracks tr.header {
+    font-size: 70%;
+    color: orange;
+}
+
+table#tracks td {
+    padding: .1ex .2em;
+}
+
+table#tracks td:nth-child(1) {
+    width: 5em;
+    text-align: right;
+}
+
+table#tracks td:nth-child(2) {
+    width: 4em;
+    text-align: right;
+}
+
+table#tracks td:nth-child(4) {
+    width: 3em;
+    text-align: right;
+}
+
+/* small screens */
+/*@media only screen and (max-device-width:568px) {*/
+@media only screen and (max-width:320px) {
+    table#tracks td:nth-child(2), table#tracks td:nth-child(5) {
+        display: none;
+        visibility: hidden;
+    }
+}
