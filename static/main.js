@@ -18,6 +18,7 @@ window.onload = function() {
 }
 
 var lastUpdate;
+var fetching = false;
 
 function updateHeader() {
     var thetime = new Date();
@@ -48,6 +49,13 @@ function updateHeader() {
             since = Math.floor((thetime.getTime() - lastUpdate.updated) / (1000*60));
         }
         refreshtime.innerHTML = "<span>&delta; " + since + " min</span>";
+    }
+}
+
+function showBusy() {
+    var refreshtime = document.getElementById('refreshtime');
+    if (refreshtime) {
+        refreshtime.innerHTML = "<span>fetching...</span>";
     }
 }
 
@@ -83,19 +91,26 @@ function registerActors() {
 }
 
 function refreshData(e) {
-    sendRequest('board', boardData);
+    if (!fetching) {
+        fetching = true;
+        showBusy();
+        sendRequest('board', boardData);
+    }
 }
 
 function boardData(req) {
-    console.log(req.responseText);
-    lastUpdate = {
-        'updated': Date.now(),
-        'data': JSON.parse(req.responseText),
-    };
-    storeData('board', lastUpdate);
+    if (req.responseText) {
+        lastUpdate = {
+            'updated': Date.now(),
+            'data': JSON.parse(req.responseText),
+        };
+        storeData('board', lastUpdate);
+    }
 
     updateHeader();
     updateBody();
+
+    fetching = false;
 }
 
 function addTrack(board, row) {
@@ -164,10 +179,6 @@ function sendRequest(url, callback, postData) {
         if (req.readyState != 4) {
             return;
         }
-        if (req.status != 200 && req.status != 304) {
-            return;
-        }
-
         callback(req);
     }
 
