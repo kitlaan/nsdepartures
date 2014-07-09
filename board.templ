@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <title>North Station Departures</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="stylesheet" href="static/main.css">
+    </head>
+    <body>
+        <p>MBTA North Station Departures</p>
+        <table>
+            <tr>
+                <td id="dayofweek">{{ dayofweek }}</td>
+                <td id="refreshtime">{{ refreshtime }}</td>
+            </tr>
+            <tr>
+                <td id="curdate">{{ curdate }}</td>
+                <td id="curtime">{{ curtime }}</td>
+            </tr>
+        </table>
+        <table id="tracks">
+            <tr class="header">
+                <td>time</td>
+                <td>trip</td>
+                <td>destination</td>
+                <td>track</td>
+                <td>status</td>
+            </tr>
+            {% for row in tracks %}
+            <tr>
+                <td>{{ row.ScheduledTime }}</td>
+                <td>{{ row.Trip }}</td>
+                <td>{{ row.Destination }}</td>
+                <td>{{ row.Track }}</td>
+                <td>{{ row.Status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
