@@ -126,11 +126,11 @@ function addTrack(board, row) {
     addChildElement(tr, 'td', row['Track']);
 
     var status = row['Status'];
-    if (row['Lateness']) {
+    if (row['Lateness'] > 0) {
         // assuming it's in seconds
         status += " (" + Math.floor(row['Lateness'] / 60) + " min)";
     }
-    addChildElement(tr, 'td', row['Status']);
+    addChildElement(tr, 'td', status);
 
     board.appendChild(tr);
 }
