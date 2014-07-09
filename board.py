@@ -10,7 +10,7 @@ class BoardHandler(webapp2.RequestHandler):
     def get(self):
         departures = memcache.get('departures')
         if departures is not None:
-            self.response.write(departures)
+            self.response.write(json.encode(departures))
             return
 
         result = urlfetch.fetch('http://developer.mbta.com/lib/gtrtfs/Departures.csv')
