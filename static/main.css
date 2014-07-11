@@ -4,6 +4,10 @@
     src: url(ShareTechMono-Regular.ttf);
 }*/
 
+html {
+    -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
+}
+
 body {
     font-family: 'Share Tech Mono';
     text-transform: uppercase;
@@ -13,6 +17,9 @@ body {
 
 p {
     text-align: center;
+}
+
+p.leader {
     font-size: 115%;
     margin-bottom: 0;
 }
@@ -32,10 +39,11 @@ noscript a:hover {
 
 p.footer {
     font-size: 8pt;
-    color: grey;
+    margin-top: 3ex;
+    color: #303030;
 }
 p.footer a {
-    color: grey;
+    color: #303030;
 }
 
 table {
